@@ -28,10 +28,10 @@ function validateActionId(req, res, next) {
     .catch(next);
 }
 
-function validateAction(req, res, next) {
+function validateActionFields(req, res, next) {
   const { project_id, description, completed, notes } = req.body;
   console.log(req.body);
-  if (!project_id || !description || !notes) {
+  if (!project_id || !description || completed === undefined || !notes) {
     res.status(400).json({
       message: "missing field",
     });
@@ -44,4 +44,4 @@ function validateAction(req, res, next) {
   }
 }
 
-module.exports = { actionsLogger, validateActionId, validateAction };
+module.exports = { actionsLogger, validateActionId, validateActionFields };
