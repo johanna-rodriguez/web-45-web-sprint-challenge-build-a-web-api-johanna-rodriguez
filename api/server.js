@@ -9,6 +9,7 @@ const actionsRouter = require("./actions/actions-router");
 // Build your actions router in /api/actions/actions-router.js
 // Build your projects router in /api/projects/projects-router.js
 // Do NOT `server.listen()` inside this file!
+server.use(express.json());
 server.use(cors());
 server.use(morgan("dev"));
 
@@ -22,11 +23,11 @@ server.get("/api/hello", (req, res) => {
 server.use("*", (req, res) => {
   res.send(`<h1>Hello!</h1>`);
 });
+// eslint-disable-next-line no-unused-vars
 server.use((err, req, res, next) => {
-  // eslint-disable-line
-  res.status(500).json({
+  console.log(err.message);
+  res.status(err.status || 500).json({
     message: err.message,
-    stack: err.stack,
   });
 });
 module.exports = server;

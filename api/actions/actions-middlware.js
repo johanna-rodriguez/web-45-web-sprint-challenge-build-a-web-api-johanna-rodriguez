@@ -28,4 +28,20 @@ function validateActionId(req, res, next) {
     .catch(next);
 }
 
-module.exports = { actionsLogger, validateActionId };
+function validateAction(req, res, next) {
+  const { project_id, description, completed, notes } = req.body;
+  console.log(req.body);
+  if (!project_id || !description || !notes) {
+    res.status(400).json({
+      message: "missing field",
+    });
+  } else {
+    req.project_id = project_id;
+    req.description = description;
+    req.completed = completed;
+    req.notes = notes;
+    next();
+  }
+}
+
+module.exports = { actionsLogger, validateActionId, validateAction };
